@@ -52,6 +52,7 @@ import re
 import os, os.path
 from tempfile import NamedTemporaryFile
 import pipes
+import traceback
 
 def main():
   module = AnsibleModule(
@@ -70,6 +71,7 @@ def main():
   except IOError as err:
     module.fail_json(msg="Error accessing file: %s" % str(err))
   except TypeError as err:
+    traceback.print_tb(err.__traceback__)
     module.fail_json(msg="Unexpected variable type: %s" % str(err))
   except AssertionError as err:
     module.fail_json(msg="Unexpectec condition: %s" % str(err))
